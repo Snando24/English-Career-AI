@@ -31,6 +31,7 @@ Usuario ? Registro ? Perfil ? Cursos ? Lecciones ? Ejercicios ? Evaluación (IA) 
 ```
 
 ### Stack Tecnológico
+
 | Componente | Tecnología | Versión |
 |---|---|---|
 | **Frontend (Mobile)** | React Native + Expo | Latest |
@@ -260,9 +261,9 @@ CREATE TABLE users (
 CREATE TABLE user_profiles (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL UNIQUE,
-  professional_area VARCHAR(50),  -- backend, frontend, full-stack
-  current_level VARCHAR(20),      -- foundational, a1, a2, b1, b2
-  learning_goal VARCHAR(100),     -- job_search, remote_work, tech_interviews
+  professional_area VARCHAR(50),
+  current_level VARCHAR(20),
+  learning_goal VARCHAR(100),
   daily_minutes INT DEFAULT 30,
   weak_areas JSONB DEFAULT '[]',
   created_at TIMESTAMP DEFAULT NOW(),
@@ -363,8 +364,8 @@ CREATE TABLE courses (
   id UUID PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT,
-  professional_areas JSONB,  -- ["backend", "frontend"]
-  difficulty_level VARCHAR(20),  -- beginner, intermediate, advanced
+  professional_areas JSONB,
+  difficulty_level VARCHAR(20),
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -382,8 +383,8 @@ CREATE TABLE lessons (
   id UUID PRIMARY KEY,
   module_id UUID NOT NULL,
   title VARCHAR(255) NOT NULL,
-  content TEXT,  -- Puede ser markdown o HTML
-  content_type VARCHAR(50),  -- text, video_link, interactive
+  content TEXT,
+  content_type VARCHAR(50),
   estimated_minutes INT DEFAULT 10,
   order_index INT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
@@ -395,7 +396,7 @@ CREATE TABLE user_progress (
   user_id UUID NOT NULL,
   lesson_id UUID NOT NULL,
   completed BOOLEAN DEFAULT FALSE,
-  score INT,  -- 0-100
+  score INT,
   last_attempted TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY(user_id) REFERENCES users(id),
@@ -489,7 +490,6 @@ Course: Foundations (Beginner English Basics)
 
 **Modelo de Datos**
 ```sql
--- Tipos de ejercicio
 CREATE TYPE exercise_type AS ENUM (
   'MULTIPLE_CHOICE',
   'SHORT_ANSWER',
@@ -502,10 +502,10 @@ CREATE TABLE exercises (
   lesson_id UUID NOT NULL,
   type exercise_type NOT NULL,
   question TEXT NOT NULL,
-  correct_answer VARCHAR(255),  -- Para respuestas cerradas
-  options JSONB,  -- Para MULTIPLE_CHOICE: [{"id":"a","text":"..."}, ...]
+  correct_answer VARCHAR(255),
+  options JSONB,
   explanation TEXT,
-  difficulty_level INT DEFAULT 1,  -- 1-5
+  difficulty_level INT DEFAULT 1,
   created_at TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY(lesson_id) REFERENCES lessons(id) ON DELETE CASCADE
 );
@@ -516,7 +516,7 @@ CREATE TABLE user_answers (
   exercise_id UUID NOT NULL,
   answer_text TEXT NOT NULL,
   is_correct BOOLEAN,
-  score INT,  -- 0-100
+  score INT,
   explanation_given TEXT,
   attempted_at TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY(user_id) REFERENCES users(id),
@@ -547,15 +547,7 @@ For OPEN_RESPONSE (Fase 3b):
 
 - [ ] `POST /api/exercises/{id}/submit`
   - Body: `{ answer_text }`
-  - Response: 
-    ```json
-    {
-      "is_correct": boolean,
-      "score": 0-100,
-      "explanation": "...",
-      "correct_answer": "..." (mostrar respuesta)
-    }
-    ```
+  - Response: `{ is_correct, score, explanation, correct_answer }`
   - Guardar en user_answers
 
 - [ ] `GET /api/users/me/attempts?lesson_id={id}`
@@ -709,9 +701,9 @@ CREATE TABLE user_skills (
 CREATE TABLE user_errors (
   id UUID PRIMARY KEY,
   user_id UUID NOT NULL,
-  error_type VARCHAR(100),  -- "a_vs_an", "present_simple", etc
-  category VARCHAR(50),  -- "grammar", "vocabulary"
-  frequency INT DEFAULT 1,  -- cuántas veces detectado
+  error_type VARCHAR(100),
+  category VARCHAR(50),
+  frequency INT DEFAULT 1,
   last_seen TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -729,27 +721,7 @@ CREATE TABLE achievements (
 **Endpoints**
 
 - [ ] `GET /api/users/me/dashboard`
-  - Response:
-    ```json
-    {
-      "xp": 1420,
-      "streak_days": 8,
-      "total_lessons_completed": 12,
-      "weekly_goal": 82,  -- % de objetivo de 30 min x 7 días
-      "skills": {
-        "grammar": 84,
-        "vocabulary": 76,
-        "listening": 70,
-        "speaking": 68,
-        "writing": 87,
-        "technical_english": 91
-      },
-      "recent_errors": [
-        { "error_type": "a_vs_an", "category": "grammar", "frequency": 4 }
-      ],
-      "achievements": [...]
-    }
-    ```
+  - Response: `{ xp, streak_days, weekly_goal, skills, recent_errors, achievements }`
 
 - [ ] `GET /api/users/me/skills`
   - Response: desglose detallado por habilidad
@@ -758,17 +730,7 @@ CREATE TABLE achievements (
   - Response: lista ordenada por frecuencia
 
 - [ ] `GET /api/users/me/recommendations`
-  - Response: 
-    ```json
-    {
-      "reinforcement": [
-        { "lesson_id": "...", "reason": "You failed 'a/an' 3 times" }
-      ],
-      "next_lessons": [
-        { "lesson_id": "...", "reason": "You're ready for this" }
-      ]
-    }
-    ```
+  - Response: `{ reinforcement: [...], next_lessons: [...] }`
 
 **Lógica de Scoring**
 
@@ -842,28 +804,8 @@ if lesson.score >= 85% AND no_estudia > 2_dias:
 
 **Sync Service**
 - [ ] `POST /api/sync` (endpoint para sincronización batch)
-  - Body:
-    ```json
-    {
-      "timestamp": "2026-10-08T10:00:00Z",
-      "changes": [
-        { "type": "user_answer", "id": "...", "data": {...} },
-        { "type": "user_progress", "id": "...", "data": {...} }
-      ]
-    }
-    ```
-  - Response:
-    ```json
-    {
-      "synced": true,
-      "server_timestamp": "2026-10-08T10:00:30Z",
-      "conflicts": [],
-      "pull": {  -- datos del servidor que cambiaroa
-        "user_skills": {...},
-        "courses_updated": [...]
-      }
-    }
-    ```
+  - Body: `{ timestamp, changes: [...] }`
+  - Response: `{ synced, server_timestamp, conflicts, pull }`
 
 **Conflict Resolution**
 - [ ] Estrategia: last-write-wins (timestamp del servidor prevalece)
@@ -874,12 +816,12 @@ if lesson.score >= 85% AND no_estudia > 2_dias:
 **Sync Manager Service**
 ```typescript
 class SyncManager {
-  private queue: Change[] = [];  // Queue de cambios pendientes
+  private queue: Change[] = [];
   
   async queueChange(change: Change);
-  async syncBatch(): Promise<SyncResult>;  // Llamado cuando online
+  async syncBatch(): Promise<SyncResult>;
   async handleConflict(conflict: Conflict);
-  subscribeToBattery();  // Sync cuando dispositivo está cargando
+  subscribeToBattery();
 }
 ```
 
@@ -891,32 +833,9 @@ class SyncManager {
   - Cada 5 minutos si online
   - Antes de cerrar app
 - [ ] Indicador UI:
-  - "? Syncing..." (durante sync)
+  - "? Syncing..."
   - "? Synced 30 sec ago"
   - "? Sync error, retrying..."
-
-**Flujo Offline-First**
-```
-????????????????????????????
-? Usuario hace ejercicio   ?
-????????????????????????????
-         ?
-    Online?
-    ?? Sí ? POST /submit directo
-    ?? No ? Guardar en SQLite + queue
-         ?
-    ? (conecta internet)
-????????????????????????????
-? Sync Manager detecta     ?
-? conexión ? POST /sync    ?
-????????????????????????????
-         ?
-    ? (servidor procesa)
-????????????????????????????
-? Datos sincronizados      ?
-? UI actualizado           ?
-????????????????????????????
-```
 
 #### ? Verificación
 - [ ] Hacer ejercicio sin internet
@@ -936,85 +855,52 @@ class SyncManager {
 #### ? Entregables Backend
 
 **Performance & Seguridad**
-- [ ] Implementar índices de base de datos (queries frecuentes)
+- [ ] Implementar índices de base de datos
 - [ ] Paginación: `/api/courses?page=1&size=10`
 - [ ] Lazy loading: módulos/lecciones bajo demanda
-- [ ] Caché de cursos (no cambian frecuentemente)
+- [ ] Caché de cursos
 - [ ] Rate limiting global (10 req/s por IP)
 - [ ] Validación de entrada en todos endpoints
 - [ ] Sanitización de datos JSONB
 
 **Testing**
 - [ ] JUnit5 + Mockito para servicios críticos
-  - AuthService
-  - EvaluationService
-  - SyncService
+  - AuthService, EvaluationService, SyncService
 - [ ] Test coverage mínimo 70% en lógica de negocio
 - [ ] Integration tests para endpoints principales
 
 **Documentación & Logging**
-- [ ] Swagger/SpringDoc completo y actualizado
+- [ ] Swagger/SpringDoc completo
 - [ ] Logging: SLF4J + Logback
-  - Level INFO en producción
-  - DEBUG en desarrollo
 - [ ] Request/response logging en debug
 
 **Deploy & CI/CD (básico)**
 - [ ] Dockerfile para API
-  - Multi-stage build
-  - Non-root user
-  - Health check
-
-- [ ] GitHub Actions (opcional):
-  - Run tests on push
-  - Build Docker image
-  - Deploy a staging
+- [ ] GitHub Actions (opcional)
 
 #### ? Entregables Mobile
 
 **UX Refinement**
 - [ ] Animaciones suaves
-  - Transición pantallas: 300ms
-  - Progress bars con lottie
-  - Loading spinners
 - [ ] Indicadores de estado claros
-  - Error messages: rojo, 3 seg
-  - Success messages: verde, 2 seg
-  - Confirmations: dialogs modales
-- [ ] Accesibilidad
-  - Labels en inputs
-  - Contrast ratios WCAG AA
-  - Font size mínimo 14pt
+- [ ] Accesibilidad (WCAG AA)
 
 **Performance**
 - [ ] Reducir bundle size
-  - Tree-shaking
-  - Code splitting por screens
-  - Lazy loading de modules
-- [ ] Optimizar imágenes (WebP si posible)
+- [ ] Optimizar imágenes
 - [ ] Caché de imágenes
-- [ ] Memory profiling: no memory leaks
+- [ ] Memory profiling
 
 **Testing**
 - [ ] Jest para unit tests
-  - API client
-  - Store slices
-  - Utility functions
 - [ ] React Testing Library para screens críticas
-  - LoginScreen
-  - ExerciseScreen
 - [ ] Test coverage: mínimo 60%
 
 **Error Handling**
 - [ ] Try-catch en async operations
 - [ ] Global error boundary
 - [ ] Retry logic con exponential backoff
-- [ ] User-friendly error messages (no stack traces)
-
-**Offline Robustness**
-- [ ] Borrado de BD: validar integridad
-- [ ] Migración de schemas SQLite
-- [ ] Compresión de datos locales (si BD > 100MB)
+- [ ] User-friendly error messages
 
 #### ? Verificación
 - [ ] App ejecuta sin crashes
@@ -1022,7 +908,7 @@ class SyncManager {
 - [ ] Navegación suave (60 fps)
 - [ ] Errores manejados elegantemente
 - [ ] Tests pasan al 100%
-- [ ] Swagger accesible en `http://localhost:8080/swagger-ui`
+- [ ] Swagger accesible
 
 ---
 
@@ -1035,99 +921,21 @@ class SyncManager {
 ```
 english-career-api/
 ??? auth/
-?   ??? controller/
-?   ?   ??? AuthController.java
-?   ??? service/
-?   ?   ??? AuthService.java
-?   ?   ??? JwtTokenProvider.java
-?   ??? dto/
-?   ?   ??? LoginRequest.java
-?   ?   ??? RegisterRequest.java
-?   ??? entity/
-?   ?   ??? User.java
-?   ??? repository/
-?       ??? UserRepository.java
-?
+?   ??? controller/ (AuthController.java)
+?   ??? service/ (AuthService.java, JwtTokenProvider.java)
+?   ??? dto/ (LoginRequest.java, RegisterRequest.java)
+?   ??? entity/ (User.java)
+?   ??? repository/ (UserRepository.java)
 ??? users/
-?   ??? controller/
-?   ?   ??? UserController.java
-?   ??? service/
-?   ?   ??? UserService.java
-?   ??? entity/
-?   ?   ??? UserProfile.java
-?   ??? repository/
-?       ??? UserProfileRepository.java
-?
 ??? courses/
 ??? lessons/
 ??? exercises/
-?   ??? controller/
-?   ?   ??? ExerciseController.java
-?   ??? service/
-?   ?   ??? ExerciseService.java
-?   ??? entity/
-?   ?   ??? Exercise.java
-?   ?   ??? UserAnswer.java
-?   ??? repository/
-?       ??? ExerciseRepository.java
-?       ??? UserAnswerRepository.java
-?
 ??? evaluations/
-?   ??? service/
-?   ?   ??? EvaluationService.java
-?   ?   ??? AIEvaluator.java (interface)
-?   ??? impl/
-?       ??? OpenAIEvaluator.java
-?
 ??? progress/
-?   ??? controller/
-?   ?   ??? ProgressController.java
-?   ??? service/
-?   ?   ??? ProgressService.java
-?   ?   ??? RecommendationService.java
-?   ??? entity/
-?   ?   ??? UserSkill.java
-?   ?   ??? UserError.java
-?   ??? repository/
-?       ??? UserSkillRepository.java
-?       ??? UserErrorRepository.java
-?
 ??? ai/
-?   ??? service/
-?   ?   ??? AIService.java
-?   ??? config/
-?       ??? OpenAIConfig.java
-?
 ??? common/
-?   ??? config/
-?   ?   ??? SecurityConfig.java
-?   ?   ??? WebConfig.java
-?   ?   ??? CacheConfig.java
-?   ??? exception/
-?   ?   ??? GlobalExceptionHandler.java
-?   ?   ??? ResourceNotFoundException.java
-?   ?   ??? AuthenticationException.java
-?   ??? util/
-?   ?   ??? JwtUtil.java
-?   ?   ??? ValidationUtil.java
-?   ??? dto/
-?       ??? ApiResponse.java
-?       ??? ErrorResponse.java
-?
 ??? Application.java
 ```
-
-**Tecnologías por capa**
-
-| Capa | Tecnología | Propósito |
-|---|---|---|
-| **Presentación** | Spring MVC / Spring WebFlux | Controladores REST |
-| **Lógica de Negocio** | Spring Service | Servicios, reglas |
-| **Persistencia** | Spring Data JPA | Acceso a datos |
-| **Base de Datos** | PostgreSQL | Almacenamiento |
-| **Cache** | Redis | Caché de evaluaciones |
-| **Autenticación** | Spring Security + JWT | Seguridad |
-| **Documentación** | SpringDoc OpenAPI | Swagger |
 
 ---
 
@@ -1139,183 +947,16 @@ english-career-api/
 english-career-app/
 ??? src/
 ?   ??? screens/
-?   ?   ??? auth/
-?   ?   ?   ??? LoginScreen.tsx
-?   ?   ?   ??? RegisterScreen.tsx
-?   ?   ?   ??? styles.ts
-?   ?   ??? onboarding/
-?   ?   ?   ??? OnboardingWizard.tsx
-?   ?   ?   ??? Step1ProfessionScreen.tsx
-?   ?   ?   ??? Step2LevelScreen.tsx
-?   ?   ?   ??? Step3GoalScreen.tsx
-?   ?   ?   ??? Step4TimeScreen.tsx
-?   ?   ??? courses/
-?   ?   ?   ??? CoursesListScreen.tsx
-?   ?   ?   ??? CourseDetailScreen.tsx
-?   ?   ?   ??? LessonDetailScreen.tsx
-?   ?   ??? exercises/
-?   ?   ?   ??? ExerciseScreen.tsx
-?   ?   ?   ??? components/
-?   ?   ?   ?   ??? MCQExercise.tsx
-?   ?   ?   ?   ??? ShortAnswerExercise.tsx
-?   ?   ?   ?   ??? FillBlankExercise.tsx
-?   ?   ?   ?   ??? OpenResponseExercise.tsx
-?   ?   ?   ??? ExerciseResult.tsx
-?   ?   ??? dashboard/
-?   ?   ?   ??? DashboardScreen.tsx
-?   ?   ?   ??? SkillsDetailScreen.tsx
-?   ?   ?   ??? ErrorsScreen.tsx
-?   ?   ?   ??? RecommendationsScreen.tsx
-?   ?   ??? profile/
-?   ?   ?   ??? ProfileScreen.tsx
-?   ?   ?   ??? SettingsScreen.tsx
-?   ?   ??? navigation/
-?   ?       ??? RootNavigator.tsx
-?   ?       ??? AuthNavigator.tsx
-?   ?       ??? AppNavigator.tsx
-?   ?
 ?   ??? services/
-?   ?   ??? api.ts              -- Axios client + interceptores
-?   ?   ??? auth.ts             -- Lógica autenticación
-?   ?   ??? storage.ts          -- SecureStore + AsyncStorage
-?   ?   ??? sync.ts             -- Sync offline
-?   ?   ??? offline.ts          -- SQLite queries
-?   ?   ??? notification.ts     -- Manejo de notificaciones
-?   ?
 ?   ??? store/
-?   ?   ??? index.ts            -- Setup Redux/Zustand
-?   ?   ??? slices/
-?   ?   ?   ??? authSlice.ts
-?   ?   ?   ??? userSlice.ts
-?   ?   ?   ??? coursesSlice.ts
-?   ?   ?   ??? progressSlice.ts
-?   ?   ?   ??? uiSlice.ts
-?   ?   ??? selectors.ts
-?   ?
 ?   ??? types/
-?   ?   ??? index.ts            -- TypeScript interfaces
-?   ?   ??? api.ts
-?   ?   ??? domain.ts
-?   ?   ??? navigation.ts
-?   ?
 ?   ??? components/
-?   ?   ??? common/
-?   ?   ?   ??? LoadingSpinner.tsx
-?   ?   ?   ??? ErrorBoundary.tsx
-?   ?   ?   ??? Header.tsx
-?   ?   ?   ??? BottomTabBar.tsx
-?   ?   ??? ui/
-?   ?       ??? Button.tsx
-?   ?       ??? Input.tsx
-?   ?       ??? Card.tsx
-?   ?       ??? ProgressBar.tsx
-?   ?
 ?   ??? utils/
-?   ?   ??? formatters.ts
-?   ?   ??? validators.ts
-?   ?   ??? constants.ts
-?   ?   ??? helpers.ts
-?   ?
 ?   ??? theme/
-?   ?   ??? colors.ts
-?   ?   ??? typography.ts
-?   ?   ??? spacing.ts
-?   ?
-?   ??? App.tsx                 -- Punto de entrada
-?
-??? app.json                    -- Config Expo
-??? eas.json                    -- Config EAS (builds)
+?   ??? App.tsx
+??? app.json
 ??? package.json
 ??? tsconfig.json
-??? babel.config.js
-??? .env.example
-```
-
-**State Management (Redux)**
-
-```typescript
-// Store structure
-{
-  auth: {
-    token: string | null,
-    user: User | null,
-    isLoading: boolean,
-    error: string | null
-  },
-  user: {
-    profile: UserProfile | null,
-    skills: UserSkills | null,
-    errors: UserError[] | null
-  },
-  courses: {
-    list: Course[] | null,
-    selected: Course | null,
-    lessons: Lesson[] | null,
-    loading: boolean
-  },
-  progress: {
-    exercises: Exercise[] | null,
-    currentAnswer: any | null,
-    result: ExerciseResult | null
-  },
-  ui: {
-    networkStatus: 'online' | 'offline',
-    syncStatus: 'idle' | 'syncing' | 'error',
-    showNotification: boolean,
-    notificationMessage: string
-  }
-}
-```
-
----
-
-### Database Schema
-
-**Diagrama de Entidades**
-
-```
-???????????????????
-?     Users       ?
-?   (id, email)   ?
-???????????????????
-         ?
-         ???? UserProfile (profesión, nivel)
-         ???? UserProgress (lesson completada)
-         ???? UserAnswer (respuestas ejercicios)
-         ???? UserSkill (puntuaciones por skill)
-         ???? UserError (errores detectados)
-                 
-????????????????????
-?     Courses      ?
-????????????????????
-         ?
-         ???? Modules
-         ?      ?
-         ?      ???? Lessons
-         ?             ?
-         ?             ???? Exercises
-         ?                    ?
-         ?                    ???? UserAnswer
-         ?
-         ???? CourseTags
-
-???????????????????
-?  Achievements   ?
-?  (user badges)  ?
-???????????????????
-```
-
-**Índices Críticos**
-
-```sql
--- Performance queries
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_user_progress_user_lesson ON user_progress(user_id, lesson_id);
-CREATE INDEX idx_user_answers_user_id ON user_answers(user_id);
-CREATE INDEX idx_user_answers_exercise_id ON user_answers(exercise_id);
-CREATE INDEX idx_exercises_lesson_id ON exercises(lesson_id);
-CREATE INDEX idx_lessons_module_id ON lessons(module_id);
-CREATE INDEX idx_modules_course_id ON modules(course_id);
 ```
 
 ---
@@ -1333,8 +974,6 @@ Content-Type: application/json
   "password": "SecurePass123!"
 }
 
----
-
 Response: 200 OK
 {
   "user_id": "uuid",
@@ -1344,74 +983,11 @@ Response: 200 OK
 }
 ```
 
-```http
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "SecurePass123!"
-}
-
----
-
-Response: 200 OK
-{
-  "token": "eyJhbGciOi...",
-  "refresh_token": "eyJhbGciOi...",
-  "expires_in": 86400
-}
-```
-
-### Users
-
-```http
-GET /api/users/me
-Authorization: Bearer {token}
-
----
-
-Response: 200 OK
-{
-  "id": "uuid",
-  "email": "user@example.com",
-  "profile": {
-    "professional_area": "backend",
-    "current_level": "a1",
-    "learning_goal": "job_search",
-    "daily_minutes": 30
-  }
-}
-```
-
-```http
-PUT /api/users/me/profile
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "professional_area": "backend",
-  "current_level": "a1",
-  "learning_goal": "job_search",
-  "daily_minutes": 30
-}
-
----
-
-Response: 200 OK
-{
-  "success": true,
-  "profile": {...}
-}
-```
-
 ### Courses
 
 ```http
 GET /api/courses?professional_area=backend
 Authorization: Bearer {token}
-
----
 
 Response: 200 OK
 {
@@ -1419,67 +995,13 @@ Response: 200 OK
     {
       "id": "uuid",
       "title": "Foundations",
-      "description": "...",
-      "professional_areas": ["backend", "frontend"],
-      "difficulty": "beginner"
-    }
-  ]
-}
-```
-
-```http
-GET /api/courses/{id}
-Authorization: Bearer {token}
-
----
-
-Response: 200 OK
-{
-  "id": "uuid",
-  "title": "Foundations",
-  "modules": [
-    {
-      "id": "uuid",
-      "title": "Verb To Be",
-      "lessons": [
-        {
-          "id": "uuid",
-          "title": "I am, You are, He/She/It is",
-          "content_type": "text",
-          "estimated_minutes": 10
-        }
-      ]
+      "description": "..."
     }
   ]
 }
 ```
 
 ### Exercises
-
-```http
-GET /api/lessons/{id}/exercises
-Authorization: Bearer {token}
-
----
-
-Response: 200 OK
-{
-  "data": [
-    {
-      "id": "uuid",
-      "lesson_id": "uuid",
-      "type": "MULTIPLE_CHOICE",
-      "question": "I __ a developer",
-      "options": [
-        {"id": "a", "text": "am"},
-        {"id": "b", "text": "are"},
-        {"id": "c", "text": "is"}
-      ],
-      "difficulty": 1
-    }
-  ]
-}
-```
 
 ```http
 POST /api/exercises/{id}/submit
@@ -1490,24 +1012,20 @@ Content-Type: application/json
   "answer_text": "am"
 }
 
----
-
 Response: 200 OK
 {
   "is_correct": true,
   "score": 100,
-  "explanation": "Correcto. 'I am' es la forma correcta del verbo 'to be' con 'I'.",
+  "explanation": "Correcto...",
   "correct_answer": "am"
 }
 ```
 
-### Progress & Dashboard
+### Dashboard
 
 ```http
 GET /api/users/me/dashboard
 Authorization: Bearer {token}
-
----
 
 Response: 200 OK
 {
@@ -1516,72 +1034,7 @@ Response: 200 OK
   "weekly_goal": 82,
   "skills": {
     "grammar": 84,
-    "vocabulary": 76,
-    "listening": 70,
-    "speaking": 68,
-    "writing": 87,
-    "technical_english": 91
-  },
-  "recent_errors": [
-    {"error_type": "a_vs_an", "frequency": 4}
-  ]
-}
-```
-
-```http
-GET /api/users/me/recommendations
-Authorization: Bearer {token}
-
----
-
-Response: 200 OK
-{
-  "reinforcement": [
-    {
-      "lesson_id": "uuid",
-      "reason": "You failed 'a/an' 3 times"
-    }
-  ],
-  "next_lessons": [
-    {
-      "lesson_id": "uuid",
-      "reason": "Ready for this level"
-    }
-  ]
-}
-```
-
-### Sync
-
-```http
-POST /api/sync
-Authorization: Bearer {token}
-Content-Type: application/json
-
-{
-  "timestamp": "2026-10-08T10:00:00Z",
-  "changes": [
-    {
-      "type": "user_answer",
-      "id": "uuid",
-      "data": {
-        "exercise_id": "uuid",
-        "answer_text": "am",
-        "score": 100
-      }
-    }
-  ]
-}
-
----
-
-Response: 200 OK
-{
-  "synced": true,
-  "server_timestamp": "2026-10-08T10:00:30Z",
-  "pull": {
-    "user_skills": {...},
-    "courses_updated": []
+    "vocabulary": 76
   }
 }
 ```
@@ -1590,105 +1043,39 @@ Response: 200 OK
 
 ## ?? Cronograma Detallado
 
-### Semana 1-2: Fase 0 (Setup & Infrastructure)
+**Semana 1-2: Fase 0**
+- Setup Spring Boot, Expo, Docker, esquema BD, seed data
 
-| Día | Backend | Mobile | Notas |
-|---|---|---|---|
-| **L1** | Init Spring Boot project, structure | Init Expo project, navigation | Paralelo |
-| **L2** | PostgreSQL schema, migrations | Setup Redux/Zustand, types | Setup Docker |
-| **L3** | Auth endpoints scaffolding | Auth screens (Login, Register) | Mock APIs |
-| **L4** | Health check, Swagger setup | Onboarding UI (4 pasos) | Testing conexión |
-| **L5** | DB seed data (curso piloto) | SQLite setup, sync mock | Integration test |
-| **FDS** | Review, fixes | UI refinement | Demo local |
+**Semana 2-3: Fase 1**
+- Endpoints auth, screens login/register, onboarding wizard
 
-### Semana 2-3: Fase 1 (Autenticación & Onboarding)
+**Semana 3-4: Fase 2**
+- Endpoints cursos/lecciones, descarga offline, navegación mobile
 
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | Register endpoint (validaciones) | RegisterScreen completa |
-| **L2** | Login + JWT generation | LoginScreen + token storage |
-| **L3** | Refresh token endpoint | Token refresh interceptor |
-| **L4** | User profile endpoints | OnboardingWizard completa |
-| **L5** | Test auth flow end-to-end | Mobile integración con backend |
-| **FDS** | Security review | UX testing, fixes |
+**Semana 4-6: Fase 3**
+- Ejercicios, evaluación, tipos de preguntas, progreso
 
-### Semana 3-4: Fase 2 (Cursos & Lecciones)
+**Semana 5-6: Fase 3b (paralelo)**
+- Integración OpenAI, prompt engineering, fallback
 
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | Courses endpoints | CoursesListScreen |
-| **L2** | Modules & lessons endpoints | CourseDetailScreen |
-| **L3** | Download for offline | LessonDetailScreen |
-| **L4** | Seed 5 lecciones completas | Download & persistence |
-| **L5** | Progress tracking endpoints | Offline access test |
-| **FDS** | API documentation (Swagger) | End-to-end test |
+**Semana 6-7: Fase 4**
+- Dashboard, skills, errores, recomendaciones
 
-### Semana 4-6: Fase 3 (Ejercicios & Evaluación)
+**Semana 7-8: Fase 5**
+- Sync offline, queue, conflict resolution
 
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | Exercise model + repository | ExerciseScreen component |
-| **L2** | Evaluation service (rules-based) | MCQ/ShortAnswer UI |
-| **L3** | Submit endpoint | Result display |
-| **L4** | Seed 10 ejercicios | Integration |
-| **L5** | Tests (evaluation logic) | Offline queue for answers |
-| **FDS** | Bug fixes | Polish UI |
-
-### Semana 5-6: Fase 3b (IA Integration, paralelo)
-
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | OpenAI API setup | (paralelo con Fase 3) |
-| **L2** | AIEvaluator service | OPEN_RESPONSE UI |
-| **L3** | Prompt engineering | IA evaluation display |
-| **L4** | Caching + rate limiting | Error handling |
-| **L5** | Tests (IA fallback) | UX polish |
-| **FDS** | Production readiness | QA testing |
-
-### Semana 6-7: Fase 4 (Progreso & Adaptación)
-
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | Dashboard endpoint | DashboardScreen |
-| **L2** | Skills calculation | SkillsDetailScreen |
-| **L3** | Error tracking + recommendations | ErrorsScreen |
-| **L4** | Achievement system | RecommendationsScreen |
-| **L5** | Tests (recommendation logic) | Navigation refactor |
-| **FDS** | Bug fixes, optimization | Full integration |
-
-### Semana 7-8: Fase 5 (Offline Sync)
-
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | Sync endpoint design | SyncManager service |
-| **L2** | Conflict resolution | Offline queue |
-| **L3** | Batch processing | Auto-sync logic |
-| **L4** | Tests (sync edge cases) | UI indicators |
-| **L5** | Production hardening | Comprehensive testing |
-| **FDS** | Load testing | Field testing |
-
-### Semana 8-9: Fase 6 (Polish & Optimization)
-
-| Día | Backend | Mobile |
-|---|---|---|
-| **L1** | DB optimization (índices) | Bundle size review |
-| **L2** | Performance testing | Animation polish |
-| **L3** | Unit tests (70% coverage) | Error UI refinement |
-| **L4** | Logging + monitoring | Accessibility review |
-| **L5** | Dockerfile + CI/CD setup | Final testing |
-| **FDS** | Production deployment readiness | Release candidate |
+**Semana 8-9: Fase 6**
+- Polish, performance, tests, CI/CD
 
 ---
 
 ## ?? Dependencias y Camino Crítico
 
-### Dependencias por Fase
-
 ```
 Fase 0 (Setup)
   ?
 Fase 1 (Auth)
-  ?? Fase 2 (Cursos) [paralelo con Fase 1 última semana]
+  ?? Fase 2 (Cursos)
   ?   ?? Fase 3 (Ejercicios)
   ?   ?   ?? Fase 3b (IA) [paralelo]
   ?   ?   ?   ?? Fase 4 (Progreso)
@@ -1696,258 +1083,43 @@ Fase 1 (Auth)
   ?   ?   ?   ?   ?   ?? Fase 6 (Polish)
 ```
 
-### Camino Crítico (en serie, más lento)
-1. Backend infrastructure + DB setup: **1 semana**
-2. Authentication (backend + mobile): **2 semanas**
-3. Courses/Lessons structure: **1 semana**
-4. Exercises + evaluation: **2 semanas**
-5. AI integration: **1 semana** (puede ser paralelo)
-6. Dashboard + progress: **1 semana**
-7. Offline sync: **1 semana**
-8. Polish: **1-2 semanas**
-
 **Total: 8-9 semanas en ruta crítica**
 
-### Paralelización Posible
-- Backend curso setup ? Mobile auth screens (misma semana)
-- Backend exercise evaluation ? Mobile exercise UI (misma semana)
-- Backend IA ? Mobile dashboard (misma semana)
-- Backend sync ? Mobile offline queue (misma semana)
-
 ---
 
-## ? Verificación y Testing
+## ? Criterios de Éxito MVP
 
-### Verificación por Fase
-
-#### Fase 0
-- [ ] Docker Compose levanta PostgreSQL sin errores
-- [ ] Backend compila: `mvn clean build`
-- [ ] Frontend compila: `npm install && npm start` (Expo)
-- [ ] Health check: `GET http://localhost:8080/health` ? 200 OK
-- [ ] Base de datos inicializada con schema
-
-#### Fase 1
-- [ ] Usuario puede registrarse con email/password
-- [ ] Login retorna JWT válido
-- [ ] JWT incluido en Authorization header: `Bearer {token}`
-- [ ] Perfil guardable (PUT /users/me/profile)
-- [ ] Datos persisten offline en SQLite
-- [ ] Token refresca automáticamente
-
-#### Fase 2
-- [ ] GET /courses retorna cursos filtrados
-- [ ] Navegación: Cursos ? Módulos ? Lecciones (sin errores)
-- [ ] Lecciones descargables offline
-- [ ] Contenido accesible sin internet
-- [ ] Indicator "? Available offline" funciona
-
-#### Fase 3
-- [ ] GET /exercises retorna ejercicios de lección
-- [ ] POST /submit con respuesta correcta ? score 100
-- [ ] POST /submit con respuesta incorrecta ? score 0, explicación visible
-- [ ] Fuzzy matching funciona (typos menores aceptados)
-- [ ] Progreso actualizado: "2/5 ejercicios" ? "3/5"
-- [ ] Respuestas offline persistidas y sincronizadas
-
-#### Fase 3b
-- [ ] OPEN_RESPONSE enviado a IA
-- [ ] Respuesta evaluada correctamente
-- [ ] Explicación personalizada por nivel del usuario
-- [ ] Caché evita re-evaluar mismo input
-- [ ] Fallback si IA no disponible
-
-#### Fase 4
-- [ ] Dashboard carga datos correctamente
-- [ ] Skills mostrados: Grammar 84%, Vocab 76%, etc
-- [ ] Errores listados por frecuencia
-- [ ] Recomendaciones generadas automáticamente
-- [ ] Datos sincronizados correctamente
-
-#### Fase 5
-- [ ] Ejercicios completados offline se guardan en SQLite
-- [ ] Conectar internet ? UI muestra "Syncing..."
-- [ ] Datos enviados al servidor sin errores
-- [ ] Dashboard actualiza post-sync
-- [ ] No hay pérdida de datos
-
-#### Fase 6
-- [ ] App sin crashes (test 30 min de uso)
-- [ ] Load time < 3s
-- [ ] Navegación 60fps
-- [ ] Todos los tests pasan
-- [ ] Swagger accesible
-- [ ] Error messages informativos
-
-### Estrategia de Testing
-
-**Backend**
-
-```java
-// JUnit5 + Mockito
-@SpringBootTest
-class AuthServiceTest {
-  @Test
-  void testRegisterNewUser_Success() { ... }
-  
-  @Test
-  void testLoginInvalidCredentials_Fail() { ... }
-}
-
-// Integration tests
-@SpringBootTest
-class AuthControllerIntegrationTest {
-  @Test
-  void testRegisterEndpoint_201_Created() { ... }
-}
-```
-
-**Mobile**
-
-```typescript
-// Jest + React Testing Library
-describe('LoginScreen', () => {
-  it('should call login API with email/password', () => { ... });
-  it('should show error on invalid credentials', () => { ... });
-});
-
-describe('ExerciseScreen', () => {
-  it('should display exercise correctly', () => { ... });
-  it('should submit answer and show result', () => { ... });
-});
-```
-
-**E2E Manual**
-
-```
-Flujo 1: New user
-?? Register
-?? Onboarding
-?? View courses
-?? Download lesson
-?? Complete exercise
-?? Check dashboard
-?? Logout
-
-Flujo 2: Offline
-?? Disconnect internet
-?? Do exercise
-?? Check local storage
-?? Reconnect
-?? Verify sync
-```
-
----
-
-## ?? Criterios de Éxito
-
-### MVP Success Criteria
-
-| Criterio | Verificación |
-|---|---|
-| ? Autenticación | User registra, logea, recibe JWT válido |
-| ? Perfil & Onboarding | User complete wizard (profesión, nivel, objetivo) |
-| ? Navegación de Cursos | User ve cursos filtrados por área profesional |
-| ? Lecciones & Contenido | User accede a contenido teórico |
-| ? Ejercicios Cerrados | MCQ, short answer, fill blank funcionan |
-| ? Evaluación Automática | Respuestas correctas e incorrectas evaluadas |
-| ? Respuestas Abiertas + IA | OPEN_RESPONSE evaluado por LLM correctamente |
-| ? Explicaciones Contextuales | Usuario recibe feedback personalizado |
-| ? Progreso Visible | Dashboard muestra XP, streak, skills, errores |
-| ? Recomendaciones | Sistema sugiere refuerzo automáticamente |
-| ? Offline Funcional | Lecciones y ejercicios accesibles sin internet |
-| ? Sincronización | Cambios offline se sincronizan correctamente |
-| ? UX Fluida | Navegación sin crashes, transiciones suaves |
-| ? Performance | App responsiva (<100ms respuestas API) |
-| ? Error Handling | Errores manejados elegantemente al usuario |
-
-### Métricas de Éxito
-
-| Métrica | Objetivo |
-|---|---|
-| **Test Coverage (Backend)** | ? 70% lógica crítica |
-| **Test Coverage (Mobile)** | ? 60% screens principales |
-| **API Response Time** | < 100ms (p95) |
-| **First Load Time** | < 3s (mobile) |
-| **Frame Rate** | 60 fps en navegación |
-| **Bundle Size** | < 50MB (app uncompressed) |
-| **Crash Rate** | 0% en test de 1 hora |
-| **Offline Success Rate** | 100% de cambios synced |
+| Criterio | Status |
+|----------|--------|
+| ? Autenticación completa | - |
+| ? Perfil & Onboarding | - |
+| ? Navegación de cursos | - |
+| ? Ejercicios (4 tipos) | - |
+| ? Evaluación con IA | - |
+| ? Dashboard inteligente | - |
+| ? Offline funcional | - |
+| ? Sincronización | - |
+| ? UX fluida (sin crashes) | - |
+| ? Tests (70% backend, 60% mobile) | - |
 
 ---
 
 ## ?? Notas Importantes
 
-### Decisiones de Arquitectura
-
-1. **Monolith vs Microservicios**
-   - MVP: Modular Monolith (1 proceso, múltiples módulos)
-   - Ventaja: Desarrollo rápido, fácil debugging
-   - Futuro: Algunos módulos (IA, sync) pueden extraerse si crece
-
-2. **IA desde el inicio**
-   - Mejora UX pero incrementa costo (OpenAI API)
-   - Considerar: Budget ~$10-50/mes en fase MVP
-   - Fallback: Si IA no disponible, evaluación por reglas
-
-3. **SQLite offline**
-   - Suficiente para MVP (<100MB típicamente)
-   - Escalable: si crece, considerar RealmDB
-
-4. **Single Developer**
-   - Modularidad es CRÍTICA: permite trabajo autónomo por módulo
-   - Cada fase es "shippable": entregas parciales son válidas
-   - Priorizar: backend > mobile, o vice versa según contexto
+### Decisiones Clave
+1. **Monolith inicial**: Rápido, fácil debugging, escalable después
+2. **IA desde el inicio**: Mejora UX, considerar presupuesto
+3. **SQLite offline**: Suficiente para MVP
+4. **Single developer**: Modularidad es crítica
 
 ### Riesgos y Mitigación
-
-| Riesgo | Mitigación |
-|---|---|
-| **IA caro** | Limitar evaluaciones, usar caché, rate limiting |
-| **BD lenta** | Índices desde Fase 0, paginación, caché Redis |
-| **Sincronización compleja** | Empezar simple (last-write-wins), iterar |
-| **Scope creep** | Mantener foco MVP, postponer features para Fase 7 |
-| **Burnout (single dev)** | Sprints de 1 semana, breaks entre fases |
-
-### Próximos Pasos Post-MVP
-
-1. **Fase 7: SaaS (Semanas 10-12)**
-   - Sistema de suscripción (Stripe)
-   - Panel web admin
-   - Multi-tenant empresarial
-   - Soporte para más profesiones
-
-2. **Fase 8: Voz Avanzada (Semanas 13-15)**
-   - Conversaciones fluidas por voz
-   - Evaluación de pronunciación avanzada
-   - Mock interviews realistas
-
-3. **Fase 9: Gamificación+ (Semanas 16+)**
-   - Leaderboards
-   - Badges temáticas
-   - Challenges sociales
-
----
-
-## ?? Contacto y Recursos
-
-**Documentación Oficial**
-
-- React Native: https://reactnative.dev
-- Expo: https://docs.expo.dev
-- Spring Boot: https://spring.io/projects/spring-boot
-- PostgreSQL: https://www.postgresql.org/docs
-- OpenAI API: https://platform.openai.com/docs
-
-**Herramientas Recomendadas**
-
-- Backend debugging: Postman, REST Client (VS Code)
-- Mobile debugging: React Native Debugger, Flipper
-- DB management: pgAdmin, DBeaver
-- API docs: Swagger UI (auto-generado)
+- **IA caro**: Limitar evaluaciones, usar caché, rate limiting
+- **BD lenta**: Índices desde Fase 0, paginación, Redis
+- **Scope creep**: Mantener foco MVP
+- **Burnout**: Sprints de 1 semana, breaks entre fases
 
 ---
 
 **Versión**: 1.0  
-**Última actualización**: 2026-10-08  
-**Estado**: Ready for Development
+**Estado**: Ready for Development ?  
+**Próximo paso**: Iniciar Fase 0 - Infrastructure Setup

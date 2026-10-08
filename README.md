@@ -382,7 +382,7 @@ Acción automática:
 
 ---
 
-## ?? Success Criteria MVP
+## ? Success Criteria MVP
 
 | Criterio | Status |
 |----------|--------|
@@ -464,7 +464,7 @@ Un tutor personal siempre disponible, 24/7
 
 ## ?? Contribuciones
 
-Este es un proyecto de aprendizaje y portafolio técnico. 
+Este es un proyecto de aprendizaje y portafolio técnico.
 
 **Desarrollador Principal**: [@friveraq](https://github.com/friveraq)
 
