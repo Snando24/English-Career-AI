@@ -784,4 +784,3 @@ El siguiente paso recomendado es crear los documentos técnicos complementarios:
 8. Definición de APIs.
 9. Estrategia de IA.
 10. Plan de despliegue.
-

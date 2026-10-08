@@ -1,0 +1,211 @@
+# .gitattributes
+# Normalization and line ending rules for the repository
+
+# ==========================================
+# AUTO DETECT BINARY FILES
+# ==========================================
+* text=auto
+
+# ==========================================
+# DOCUMENTATION
+# ==========================================
+*.md text eol=lf
+*.markdown text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+*.sql text eol=lf
+
+# ==========================================
+# SHELL SCRIPTS
+# ==========================================
+*.sh text eol=lf
+*.bash text eol=lf
+*.zsh text eol=lf
+*.fish text eol=lf
+*.ps1 text eol=crlf
+
+# ==========================================
+# PROGRAMMING LANGUAGES
+# ==========================================
+
+# Java
+*.java text eol=lf
+
+# JavaScript/TypeScript
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.mjs text eol=lf
+
+# Python
+*.py text eol=lf
+*.pyw text eol=lf
+
+# C/C++
+*.c text eol=lf
+*.cc text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf
+*.hpp text eol=lf
+
+# HTML/CSS
+*.html text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+
+# ==========================================
+# BUILD & CONFIGURATION FILES
+# ==========================================
+
+# Maven
+pom.xml text eol=lf
+mvnw text eol=lf
+mvnw.cmd text eol=crlf
+
+# Gradle
+build.gradle text eol=lf
+gradle.properties text eol=lf
+gradlew text eol=lf
+gradlew.bat text eol=crlf
+
+# npm
+package.json text eol=lf
+package-lock.json text eol=lf
+
+# Node
+.npmrc text eol=lf
+
+# Expo
+app.json text eol=lf
+eas.json text eol=lf
+babel.config.js text eol=lf
+
+# Spring Boot
+application.yml text eol=lf
+application.yaml text eol=lf
+application*.properties text eol=lf
+
+# Docker
+Dockerfile text eol=lf
+docker-compose.yml text eol=lf
+docker-compose.yaml text eol=lf
+.dockerignore text eol=lf
+
+# Git
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# ==========================================
+# CONFIGURATION FILES
+# ==========================================
+*.conf text eol=lf
+*.config text eol=lf
+*.properties text eol=lf
+*.gradle text eol=lf
+
+# ==========================================
+# SOURCE CODE CONTROL
+# ==========================================
+.git* text eol=lf
+
+# ==========================================
+# BINARY FILES - DO NOT CONVERT
+# ==========================================
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.svg binary
+*.svgz binary
+
+# Fonts
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# Archives
+*.zip binary
+*.tar binary
+*.tar.gz binary
+*.tar.bz2 binary
+*.7z binary
+*.rar binary
+
+# Media
+*.mp3 binary
+*.mp4 binary
+*.avi binary
+*.mov binary
+*.wav binary
+*.mkv binary
+
+# Documents
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# Java/JVM
+*.jar binary
+*.war binary
+*.class binary
+*.o binary
+*.a binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.exe binary
+
+# Database
+*.db binary
+*.sqlite binary
+*.sqlite3 binary
+
+# ==========================================
+# DIFF SETTINGS
+# ==========================================
+
+# Treat these files as text with specific diff drivers
+*.java diff=java
+*.js diff=javascript
+*.ts diff=typescript
+*.py diff=python
+*.sql diff=sql
+*.xml diff=xml
+
+# ==========================================
+# MERGE SETTINGS
+# ==========================================
+
+# Use union merge for package lock files
+package-lock.json merge=union
+
+# ==========================================
+# EXPORT-IGNORE - Files not to include in archives
+# ==========================================
+.git export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.env export-ignore
+.env.* export-ignore
+node_modules/ export-ignore
+target/ export-ignore
+dist/ export-ignore
+build/ export-ignore
+.idea/ export-ignore
+.vscode/ export-ignore
+.gradle/ export-ignore

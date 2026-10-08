@@ -1,140 +1,140 @@
-# English Career AI ??
+# English Career AI 📱
 
-> **El profesor de ingl�s que cabe en tu bolsillo**
+> **El profesor de inglés que cabe en tu bolsillo**
 
-Un asistente de aprendizaje de ingl�s impulsado por IA, dise�ado espec�ficamente para profesionales de tecnolog�a que necesitan dominar el ingl�s en contextos laborales reales.
+Un asistente de aprendizaje de inglés impulsado por IA, diseñado específicamente para profesionales de tecnología que necesitan dominar el inglés en contextos laborales reales.
 
-## ?? Visi�n
+## 🎯 Visión
 
-Convertir el aprendizaje de idiomas de una tarea gen�rica a una experiencia **personalizada, adaptativa e inmersiva** donde cada lecci�n y ejercicio est� dise�ado para TU profesi�n, TU nivel y TUS objetivos de carrera.
+Convertir el aprendizaje de idiomas de una tarea genérica a una experiencia **personalizada, adaptativa e inmersiva** donde cada lección y ejercicio está diseñado para TU profesión, TU nivel y TUS objetivos de carrera.
 
 ### El Problema
 
-? Las plataformas tradicionales ense�an ingl�s gen�rico  
-? No preparan para situaciones reales en el trabajo  
-? No se adaptan a errores recurrentes espec�ficos  
-? Requieren sesiones largas (incompatible con rutina laboral)  
+❌ Las plataformas tradicionales enseñan inglés genérico  
+❌ No preparan para situaciones reales en el trabajo  
+❌ No se adaptan a errores recurrentes específicos  
+❌ Requieren sesiones largas (incompatible con rutina laboral)  
 
-### La Soluci�n
+### La Solución
 
-? Ingl�s contextualizado para desarrolladores, ingenieros, y profesionales tech  
-? Ciclo adaptativo: aprende ? practica ? eval�a ? refuerza ? avanza  
-? Sesiones cortas (~30 min) distribuidas durante el d�a  
-? Tutor con IA que entiende TUS fortalezas y debilidades  
-? Funciona offline: estudia desde cualquier lugar  
+✅ Inglés contextualizado para desarrolladores, ingenieros, y profesionales tech  
+✅ Ciclo adaptativo: aprende → practica → evalúa → refuerza → avanza  
+✅ Sesiones cortas (~30 min) distribuidas durante el día  
+✅ Tutor con IA que entiende TUS fortalezas y debilidades  
+✅ Funciona offline: estudia desde cualquier lugar  
 
 ---
 
-## ?? Funcionalidades MVP
+## ✨ Funcionalidades MVP
 
-### Autenticaci�n & Onboarding
+### Autenticación & Onboarding
 - Registro seguro con validaciones
-- Wizard de 4 pasos (profesi�n, nivel, objetivo, tiempo diario)
+- Wizard de 4 pasos (profesión, nivel, objetivo, tiempo diario)
 - Almacenamiento seguro de credenciales
 
 ### Cursos & Lecciones
-- Ruta educativa estructurada: Foundations ? A1 ? A2 ? B1 ? B2 ? English for Developers
-- Lecciones te�ricas con contenido multimedia
+- Ruta educativa estructurada: Foundations → A1 → A2 → B1 → B2 → English for Developers
+- Lecciones teóricas con contenido multimedia
 - Descarga para acceso offline
-- Progreso visible por lecci�n
+- Progreso visible por lección
 
 ### Ejercicios Inteligentes
-- **M�ltiple opci�n**: evaluaci�n instant�nea
+- **Múltiple opción**: evaluación instantánea
 - **Respuesta corta**: fuzzy matching con tolerancia a typos
-- **Rellenar espacios**: validaci�n autom�tica
-- **Respuesta abierta**: evaluaci�n contextual por IA
+- **Rellenar espacios**: validación automática
+- **Respuesta abierta**: evaluación contextual por IA
 
-### Evaluaci�n Adaptativa
-- Tutor con IA que entiende errores espec�ficos
+### Evaluación Adaptativa
+- Tutor con IA que entiende errores específicos
 - Explicaciones personalizadas por nivel
 - Feedback constructivo en tiempo real
-- Sistema de errores recurrentes detectados autom�ticamente
+- Sistema de errores recurrentes detectados automáticamente
 
 ### Dashboard Inteligente
-- **XP & Racha diaria**: motivaci�n visual
+- **XP & Racha diaria**: motivación visual
 - **Skills Profile**: desglose por habilidad (Grammar, Vocabulary, Speaking, etc)
-- **Errores Detectados**: tabla de errores m�s frecuentes
-- **Recomendaciones**: refuerzo autom�tico para �reas d�biles
+- **Errores Detectados**: tabla de errores más frecuentes
+- **Recomendaciones**: refuerzo automático para áreas débiles
 
-### Sincronizaci�n Offline-First
+### Sincronización Offline-First
 - Estudia sin internet
-- Los cambios se sincronizan autom�ticamente al conectar
-- Cero p�rdida de datos
+- Los cambios se sincronizan automáticamente al conectar
+- Cero pérdida de datos
 
 ---
 
-## ??? Stack Tecnol�gico
+## 🛠️ Stack Tecnológico
 
 ### Frontend (Mobile)
 ```
 React Native + Expo
-??? TypeScript (type-safe)
-??? React Navigation (UI fluida)
-??? Redux/Zustand (state management)
-??? SQLite (almacenamiento local)
-??? Expo Secure Store (credenciales)
+✅ TypeScript (type-safe)
+✅ React Navigation (UI fluida)
+✅ Redux/Zustand (state management)
+✅ SQLite (almacenamiento local)
+✅ Expo Secure Store (credenciales)
 ```
 
 ### Backend (API)
 ```
 Java 21 + Spring Boot 3.x
-??? Spring Security (autenticaci�n)
-??? Spring Data JPA (persistencia)
-??? PostgreSQL (base de datos)
-??? Redis (cach�)
-??? OpenAI API (evaluaci�n IA)
-??? SpringDoc (documentaci�n Swagger)
+✅ Spring Security (autenticación)
+✅ Spring Data JPA (persistencia)
+✅ PostgreSQL (base de datos)
+✅ Redis (caché)
+✅ OpenAI API (evaluación IA)
+✅ SpringDoc (documentación Swagger)
 ```
 
 ### Infraestructura
 ```
 Docker & Docker Compose
-??? PostgreSQL 15+
-??? Redis 7+
-??? Java 21 container
+✅ PostgreSQL 15+
+✅ Redis 7+
+✅ Java 21 container
 ```
 
 ---
 
-## ?? Estructura del Proyecto
+## 📂 Estructura del Proyecto
 
 ```
 English-Career-AI/
-??? backend/                    # API REST (Spring Boot)
-?   ??? src/main/java/
-?   ?   ??? com/englishcareer/
-?   ?       ??? auth/          # Login, JWT
-?   ?       ??? users/         # Perfiles
-?   ?       ??? courses/       # Cursos, m�dulos
-?   ?       ??? lessons/       # Lecciones
-?   ?       ??? exercises/     # Ejercicios
-?   ?       ??? evaluations/   # Evaluaci�n, IA
-?   ?       ??? progress/      # Dashboard, skills
-?   ?       ??? common/        # Utilidades
-?   ??? docker-compose.yml     # PostgreSQL, Redis
-?   ??? pom.xml
-?
-??? mobile/                     # App M�vil (React Native)
-?   ??? src/
-?   ?   ??? screens/           # Pantallas
-?   ?   ??? services/          # API client, sync, offline
-?   ?   ??? store/             # Redux/Zustand state
-?   ?   ??? types/             # TypeScript interfaces
-?   ?   ??? components/        # UI components
-?   ?   ??? utils/             # Helpers
-?   ??? app.json               # Expo config
-?   ??? package.json
-?
-??? docs/
-?   ??? PLAN_IMPLEMENTACION.md # Plan detallado (fase por fase)
-?   ??? API_SPEC.md            # Especificaci�n de APIs
-?
-??? README.md                   # Este archivo
+├── backend/                    # API REST (Spring Boot)
+│   ├── src/main/java/
+│   │   └── com/englishcareer/
+│   │       ├── auth/          # Login, JWT
+│   │       ├── users/         # Perfiles
+│   │       ├── courses/       # Cursos, módulos
+│   │       ├── lessons/       # Lecciones
+│   │       ├── exercises/     # Ejercicios
+│   │       ├── evaluations/   # Evaluación, IA
+│   │       ├── progress/      # Dashboard, skills
+│   │       └── common/        # Utilidades
+│   ├── docker-compose.yml     # PostgreSQL, Redis
+│   └── pom.xml
+│
+├── mobile/                     # App Móvil (React Native)
+│   ├── src/
+│   │   ├── screens/           # Pantallas
+│   │   ├── services/          # API client, sync, offline
+│   │   ├── store/             # Redux/Zustand state
+│   │   ├── types/             # TypeScript interfaces
+│   │   ├── components/        # UI components
+│   │   └── utils/             # Helpers
+│   ├── app.json               # Expo config
+│   └── package.json
+│
+├── docs/
+│   ├── PLAN_IMPLEMENTACION.md # Plan detallado (fase por fase)
+│   └── API_SPEC.md            # Especificación de APIs
+│
+└── README.md                   # Este archivo
 ```
 
 ---
 
-## ?? Inicio R�pido
+## 🚀 Inicio Rápido
 
 ### Prerequisitos
 - **Backend**: Java 21, Maven, PostgreSQL 15+
@@ -147,7 +147,7 @@ English-Career-AI/
 # 1. Clonar y navegar
 cd backend
 
-# 2. Crear .env con configuraci�n
+# 2. Crear .env con configuración
 cp .env.example .env
 # Editar con credenciales PostgreSQL
 
@@ -185,50 +185,50 @@ npx expo start
 
 ---
 
-## ?? Fases de Desarrollo
+## 📋 Fases de Desarrollo
 
 ### Fase 0: Setup & Infrastructure (Semanas 1-2)
-Establecer base t�cnica, estructura de proyectos, BD, APIs skeleton
+Establecer base técnica, estructura de proyectos, BD, APIs skeleton
 
-### Fase 1: Autenticaci�n & Onboarding (Semanas 2-3)
-Register ? Login ? Perfil usuario
+### Fase 1: Autenticación & Onboarding (Semanas 2-3)
+Register → Login → Perfil usuario
 
 ### Fase 2: Cursos & Lecciones (Semanas 3-4)
-Navegaci�n de contenido educativo, descarga offline
+Navegación de contenido educativo, descarga offline
 
-### Fase 3: Ejercicios & Evaluaci�n (Semanas 4-6)
-Ciclo ejercicio ? evaluaci�n (sin IA a�n)
+### Fase 3: Ejercicios & Evaluación (Semanas 4-6)
+Ciclo ejercicio → evaluación (sin IA aún)
 
-### Fase 3b: Integraci�n IA (Semanas 5-6)
-Respuestas abiertas con evaluaci�n contextual
+### Fase 3b: Integración IA (Semanas 5-6)
+Respuestas abiertas con evaluación contextual
 
-### Fase 4: Progreso & Adaptaci�n (Semanas 6-7)
-Dashboard inteligente, detecci�n de errores, recomendaciones
+### Fase 4: Progreso & Adaptación (Semanas 6-7)
+Dashboard inteligente, detección de errores, recomendaciones
 
-### Fase 5: Sincronizaci�n Offline (Semanas 7-8)
-Queue de cambios, sync autom�tico
+### Fase 5: Sincronización Offline (Semanas 7-8)
+Queue de cambios, sync automático
 
-### Fase 6: Polish & Optimizaci�n (Semanas 8-9)
+### Fase 6: Polish & Optimización (Semanas 8-9)
 Performance, UX, testing, deploy readiness
 
-**? Ver [PLAN_IMPLEMENTACION.md](./PLAN_IMPLEMENTACION.md) para detalles completos**
+**→ Ver [PLAN_IMPLEMENTACION.md](./PLAN_IMPLEMENTACION.md) para detalles completos**
 
 ---
 
-## ?? Ruta Educativa MVP
+## 📚 Ruta Educativa MVP
 
 ### Foundations (Nivel A0-A1)
-Construcci�n de la base gramatical m�nima
+Construcción de la base gramatical mínima
 
 - Pronombres personales
 - Verb "to be" (I am, you are, he/she/it is)
-- Art�culos (a / an)
+- Artículos (a / an)
 - Plural simple
-- Preguntas y negaciones b�sicas
+- Preguntas y negaciones básicas
 - Presentaciones personales
 
 ### A1 - Basic English
-Comunicaci�n funcional elemental
+Comunicación funcional elemental
 
 - Present Simple (I work, you work, he works)
 - Rutinas diarias
@@ -244,7 +244,7 @@ Situaciones cotidianas y laborales
 - Comparativos
 - Verbos modales
 - Conversaciones cotidianas
-- Ingl�s laboral b�sico
+- Inglés laboral básico
 
 ### B1 - Professional English
 Contexto laboral intermedio-avanzado
@@ -257,25 +257,25 @@ Contexto laboral intermedio-avanzado
 - Presentaciones
 
 ### B2 - Career English
-Fluidez y precisi�n profesional
+Fluidez y precisión profesional
 
 - Conversaciones complejas
 - Negociaciones
 - Entrevistas laborales
-- Explicaci�n de conceptos t�cnicos
+- Explicación de conceptos técnicos
 
 ### English for Developers
-L�xico y situaciones de TI
+Léxico y situaciones de TI
 
-- Terminolog�a t�cnica (backend, frontend, APIs, databases)
-- Explicaci�n de errores y soluciones
-- Code reviews en ingl�s
+- Terminología técnica (backend, frontend, APIs, databases)
+- Explicación de errores y soluciones
+- Code reviews en inglés
 - Daily meetings / standups
 - Sistemas distribuidos, arquitectura
 - Agile / Scrum
 
 ### Interview English (Bonus)
-Preparaci�n para entrevistas internacionales
+Preparación para entrevistas internacionales
 
 - HR interviews
 - Technical interviews
@@ -284,10 +284,10 @@ Preparaci�n para entrevistas internacionales
 
 ---
 
-## ?? Caracter�sticas de IA
+## 🤖 Características de IA
 
-### Evaluaci�n de Respuestas Abiertas
-La IA eval�a respuestas no cerradas entendiendo contexto, nivel del usuario, y aceptando variaciones v�lidas
+### Evaluación de Respuestas Abiertas
+La IA evalúa respuestas no cerradas entendiendo contexto, nivel del usuario, y aceptando variaciones válidas
 
 **Ejemplo**:
 ```
@@ -301,74 +301,74 @@ IA responde:
   "explanation": "Tu respuesta es clara y comunica la experiencia. 
                  Nota: usa 'have' no 'has' con 'I'",
   "common_mistake": "Uso incorrecto de third person singular",
-  "tip": "Recuerda: I/You/We/They ? have | He/She/It ? has"
+  "tip": "Recuerda: I/You/We/They → have | He/She/It → has"
 }
 ```
 
 ### Explicaciones Contextuales
-Feedback adaptado al nivel del usuario y su profesi�n
+Feedback adaptado al nivel del usuario y su profesión
 
 ```
 Nivel: A2
-Profesi�n: Backend Developer
+Profesión: Backend Developer
 
 Error detectado: "I develop applications" vs "I am developing applications"
 
-Explicaci�n simple:
-? "I develop": acciones habituales
-? "I am developing": lo que haces AHORA
+Explicación simple:
+✓ "I develop": acciones habituales
+✓ "I am developing": lo que haces AHORA
 
 Ejemplo profesional:
 "I develop REST APIs" (habitualmente)
 "I am developing a new microservice" (en este momento)
 ```
 
-### Detecci�n de Errores Recurrentes
+### Detección de Errores Recurrentes
 Sistema que identifica patrones de error
 
 ```
 Error recurrente: "a engineer"
 Veces detectado: 4
-Categor�a: Articles (a / an)
+Categoría: Articles (a / an)
 
-Acci�n autom�tica:
-? Agregar 5 ejercicios adicionales sobre "a/an"
-? Incluir en pr�xima sesi�n de refuerzo
-? Bloquear avance hasta dominio >= 85%
+Acción automática:
+✓ Agregar 5 ejercicios adicionales sobre "a/an"
+✓ Incluir en próxima sesión de refuerzo
+✓ Bloquear avance hasta dominio >= 85%
 ```
 
 ---
 
-## ?? Gamificaci�n
+## 🎮 Gamificación
 
-### Motivaci�n sin distracci�n
+### Motivación sin distracción
 
-- **XP**: +50 por lecci�n completada, +10 por ejercicio
-- **Racha diaria**: contador visual (?? 8 day streak)
-- **Nivel**: Progresi�n visual del nivel educativo
-- **Habilidades**: Desglose por skill, visualizaci�n de progreso
+- **XP**: +50 por lección completada, +10 por ejercicio
+- **Racha diaria**: contador visual (🔥 8 day streak)
+- **Nivel**: Progresión visual del nivel educativo
+- **Habilidades**: Desglose por skill, visualización de progreso
 - **Logros**: Badges por hitos ("First 100 XP", "Perfect Day", etc)
 
 ### Objetivos semanales
-- Meta: Tu objetivo diario � 7 d�as (ej: 30 min � 7 = 210 min/semana)
+- Meta: Tu objetivo diario × 7 días (ej: 30 min × 7 = 210 min/semana)
 - Progreso visual: barra que se completa
-- Notificaci�n: "Completaste tu objetivo semanal ??"
+- Notificación: "Completaste tu objetivo semanal 🎉"
 
 ---
 
-## ?? Seguridad
+## 🔒 Seguridad
 
-- ? Contrase�as hasheadas con bcrypt
-- ? JWT con expiraci�n configurable
-- ? Refresh tokens para sesiones largas
-- ? HTTPS en producci�n
-- ? Validaci�n de entrada en todos endpoints
-- ? Rate limiting para prevenir abuse
-- ? Almacenamiento seguro en dispositivo (SecureStore)
+- 🔐 Contraseñas hasheadas con bcrypt
+- 🔐 JWT con expiración configurable
+- 🔐 Refresh tokens para sesiones largas
+- 🔐 HTTPS en producción
+- 🔐 Validación de entrada en todos endpoints
+- 🔐 Rate limiting para prevenir abuse
+- 🔐 Almacenamiento seguro en dispositivo (SecureStore)
 
 ---
 
-## ?? Compatibilidad
+## 📱 Compatibilidad
 
 ### Mobile
 - **iOS**: 12.4+ (iPhone, iPad)
@@ -376,40 +376,40 @@ Acci�n autom�tica:
 - **Tablets**: Experiencia optimizada (landscape mode)
 
 ### Conectividad
-- **Online-first**: Contenido din�mico con IA
+- **Online-first**: Contenido dinámico con IA
 - **Offline-capable**: Lecciones y ejercicios descargados
-- **Auto-sync**: Sincronizaci�n autom�tica al conectar
+- **Auto-sync**: Sincronización automática al conectar
 
 ---
 
-## ? Success Criteria MVP
+## ✅ Success Criteria MVP
 
 | Criterio | Status |
 |----------|--------|
-| Autenticaci�n (register + login) | ? |
-| Perfil & Onboarding | ? |
-| Navegaci�n de cursos | ? |
-| Ejercicios (4 tipos) | ? |
-| Evaluaci�n con IA | ? |
-| Dashboard inteligente | ? |
-| Offline funcional | ? |
-| Sincronizaci�n | ? |
-| UX fluida (sin crashes) | ? |
-| Tests (70% backend, 60% mobile) | ? |
+| Autenticación (register + login) | ⏳ |
+| Perfil & Onboarding | ⏳ |
+| Navegación de cursos | ⏳ |
+| Ejercicios (4 tipos) | ⏳ |
+| Evaluación con IA | ⏳ |
+| Dashboard inteligente | ⏳ |
+| Offline funcional | ⏳ |
+| Sincronización | ⏳ |
+| UX fluida (sin crashes) | ⏳ |
+| Tests (70% backend, 60% mobile) | ⏳ |
 
 ---
 
-## ?? Roadmap Post-MVP
+## 🗺️ Roadmap Post-MVP
 
 ### Fase 7: SaaS Platform (Semanas 10-12)
-- Sistema de suscripci�n (gratuito + premium)
-- M�s profesiones (marketing, negocios, finanzas)
-- Panel web de administraci�n
+- Sistema de suscripción (gratuito + premium)
+- Más profesiones (marketing, negocios, finanzas)
+- Panel web de administración
 - Multi-tenant para empresas
 
 ### Fase 8: Voz Avanzada (Semanas 13-15)
 - Conversaciones fluidas con IA por voz
-- Evaluaci�n de pronunciaci�n avanzada
+- Evaluación de pronunciación avanzada
 - Mock interviews realistas
 - Speech-to-text mejorado
 
@@ -421,11 +421,11 @@ Acci�n autom�tica:
 
 ---
 
-## ?? Recursos
+## 📖 Recursos
 
-### Documentaci�n T�cnica
-- [Plan de Implementaci�n Detallado](./PLAN_IMPLEMENTACION.md)
-- [Especificaci�n de APIs](./docs/API_SPEC.md)
+### Documentación Técnica
+- [Plan de Implementación Detallado](./PLAN_IMPLEMENTACION.md)
+- [Especificación de APIs](./docs/API_SPEC.md)
 - [Modelo de Datos](./docs/DATABASE_SCHEMA.md)
 
 ### Herramientas Recomendadas
@@ -443,34 +443,34 @@ Acci�n autom�tica:
 
 ---
 
-## ?? Filosof�a del Producto
+## 💡 Filosofía del Producto
 
 ### 1. Mobile-First
-El usuario estudia desde el tel�fono, en cualquier lugar, en sesiones cortas
+El usuario estudia desde el teléfono, en cualquier lugar, en sesiones cortas
 
 ### 2. Adaptive Learning
 El contenido se adapta a tu nivel, errores y objetivos
 
 ### 3. Practical English
-Ingl�s real para profesionales, no lecciones te�ricas desconectadas
+Inglés real para profesionales, no lecciones teóricas desconectadas
 
 ### 4. Offline-Ready
-Estudia incluso sin internet; sincroniza autom�ticamente
+Estudia incluso sin internet; sincroniza automáticamente
 
 ### 5. AI-Powered
 Un tutor personal siempre disponible, 24/7
 
 ---
 
-## ?? Contribuciones
+## 🤝 Contribuciones
 
-Este es un proyecto de aprendizaje y portafolio t�cnico.
+Este es un proyecto de aprendizaje y portafolio técnico.
 
 **Desarrollador Principal**: [@friveraq](https://github.com/friveraq)
 
 ---
 
-## ?? Soporte
+## 🆘 Soporte
 
 ### Issues & Bugs
 Reportar en: [GitHub Issues](https://github.com/friveraq/English-Career-AI/issues)
@@ -480,25 +480,25 @@ Contacto: friveraq@example.com
 
 ---
 
-## ?? Licencia
+## 📜 Licencia
 
 MIT License - Ver [LICENSE](./LICENSE) para detalles
 
 ---
 
-## ?? Visi�n a Largo Plazo
+## 🌟 Visión a Largo Plazo
 
-**English Career AI** no es solo una app de idiomas. Es un asistente de desarrollo profesional que entiende que el ingl�s es una herramienta para crecer en la carrera.
+**English Career AI** no es solo una app de idiomas. Es un asistente de desarrollo profesional que entiende que el inglés es una herramienta para crecer en la carrera.
 
-En 2-3 a�os, la visi�n es:
+En 2-3 años, la visión es:
 
-> **Millones de profesionales en todo el mundo usando English Career AI para aprender el ingl�s que necesitan, en el momento que lo necesitan, de la forma que lo necesitan.**
+> **Millones de profesionales en todo el mundo usando English Career AI para aprender el inglés que necesitan, en el momento que lo necesitan, de la forma que lo necesitan.**
 
-Con IA adaptativa tan buena que el usuario sienta que tiene un coach personal que lo conoce mejor de lo que �l se conoce a s� mismo.
+Con IA adaptativa tan buena que el usuario sienta que tiene un coach personal que lo conoce mejor de lo que él se conoce a sí mismo.
 
 ---
 
-**Status**: Ready for Development ??  
+**Status**: Ready for Development 🚀  
 **MVP Deadline**: Week 9-10 (8-9 weeks from start)  
 **Next Step**: Start Phase 0 - Infrastructure Setup
 
@@ -506,7 +506,7 @@ Con IA adaptativa tan buena que el usuario sienta que tiene un coach personal qu
 
 <div align="center">
 
-### "Your Personal English Coach in Your Pocket" ??
+### "Your Personal English Coach in Your Pocket" 📱
 
 **English Career AI** - Transforming English Learning for Tech Professionals
 
