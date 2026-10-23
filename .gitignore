@@ -246,6 +246,8 @@ target/
 
 # Database backups
 *.sql
+# ...but keep Flyway migrations
+!backend/src/main/resources/db/migration/*.sql
 *.dump
 backup/
 
