@@ -1,10 +1,10 @@
 package com.englishcareer.auth.entity;
 
 import com.englishcareer.common.model.BaseEntity;
-import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class UserProfile extends BaseEntity {
     @Builder.Default
     private Integer dailyMinutes = 30;
 
-    @Type(JsonType.class)
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "weak_areas", columnDefinition = "jsonb")
     @Builder.Default
     private List<String> weakAreas = new ArrayList<>();

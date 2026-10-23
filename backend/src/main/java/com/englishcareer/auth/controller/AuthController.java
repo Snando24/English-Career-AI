@@ -2,6 +2,7 @@ package com.englishcareer.auth.controller;
 
 import com.englishcareer.auth.dto.AuthResponse;
 import com.englishcareer.auth.dto.LoginRequest;
+import com.englishcareer.auth.dto.RefreshTokenRequest;
 import com.englishcareer.auth.dto.RegisterRequest;
 import com.englishcareer.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,8 +40,8 @@ public class AuthController {
 
     @PostMapping("/refresh")
     @Operation(summary = "Refresh JWT token", description = "Generates a new JWT token using a refresh token")
-    public ResponseEntity<AuthResponse> refreshToken(@RequestParam String refreshToken) {
-        AuthResponse response = authService.refreshToken(refreshToken);
+    public ResponseEntity<AuthResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        AuthResponse response = authService.refreshToken(refreshTokenRequest.getRefreshToken());
         return ResponseEntity.ok(response);
     }
 

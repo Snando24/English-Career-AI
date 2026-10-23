@@ -7,11 +7,15 @@ class ApiService {
   private baseURL: string;
   private static instance: ApiService;
 
-  private constructor(baseURL: string = 'http://localhost:8080/api') {
+  // On a physical device "localhost" is the phone itself, so set
+  // EXPO_PUBLIC_API_URL in .env.local to your computer's LAN IP.
+  private constructor(
+    baseURL: string = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8080/api'
+  ) {
     this.baseURL = baseURL;
     this.api = axios.create({
       baseURL,
-      timeout: 30000,
+      timeout: Number(process.env.EXPO_PUBLIC_API_TIMEOUT ?? 30000),
       headers: {
         'Content-Type': 'application/json',
       },

@@ -64,9 +64,7 @@
       },
       "eas": {
         "projectId": "12345678-1234-1234-1234-123456789012"
-      },
-      "apiUrl": "http://localhost:8080/api",
-      "apiTimeout": 30000
+      }
     }
   }
 }
